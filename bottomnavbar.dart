@@ -5,35 +5,32 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          //home
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'HOME',
-          ),
+    return BottomNavigationBar(
+      items: const [
+        //home
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'HOME',
+        ),
 
-          //about
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'ABOUT',
-          ),
+        //about
+        BottomNavigationBarItem(
+          icon: Icon(Icons.info),
+          label: 'ABOUT',
+        ),
 
-          //settings
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'SETTING',
-          ),
+        //settings
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: 'SETTING',
+        ),
 
-          //refresh
-          BottomNavigationBarItem(
-            icon: Icon(Icons.refresh),
-            label: 'REFRESH',
-          ),
-
-        ],
-      ),
+        //refresh
+        BottomNavigationBarItem(
+          icon: Icon(Icons.refresh),
+          label: 'REFRESH',
+        ),
+      ],
     );
   }
 }
