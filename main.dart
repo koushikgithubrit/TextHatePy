@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'navbar.dart'; // Import your app bar
-import 'bottomnavbar.dart'; // Import your bottom navigation bar
+// import 'CrystalNavigationBar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,11 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Translate & Detect Hate Speech',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.light(), // Default theme
+      darkTheme: ThemeData.dark(), // Dark theme
       home: const MyHomePage(),
     );
   }
@@ -30,219 +27,122 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String userInput = '';
+  // int _currentIndex = 0;
+  //
+  // void _onNavItemTapped(int index) {
+  //   setState(() {
+  //     _currentIndex = index;
+  //   });
+  // }
+    //translate
+  String inputText = '';
   String translatedText = '';
-  String detectionResult = '';
-  // Add variables to store graph data
+  bool isHateSpeech = false;
+  double accuracy = 0.0; // You need to calculate accuracy from model predictions
 
-  // Function to handle translation and hate speech detection
-  void translateAndDetect() {
-    // Call Google Translate API to translate userInput to English
-    // Translate API call here
-
-    // Pass translated text to the hate speech detection model
-    // Model inference here
-
-    // Update translatedText and detectionResult state variables
-    setState(() {
-      // Update translatedText and detectionResult based on API and model results
-    });
-
-    // Generate graph based on model results
-    // Graph generation code here
+  void translateAndCheck() {
+    // Call translation API to translate inputText into English
+    // Call hate speech detection model with translatedText
+    // Update isHateSpeech and accuracy
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar(), // Use your custom app bar
-      // appBar: AppBar(
-      //   title: const Text('Hate Speech Detection'),
-      //   backgroundColor: Colors.deepPurple,
-      // ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Input bar
-            TextField(
-              onChanged: (value) {
-                setState(() {
-                  userInput = value;
-                });
-              },
-              decoration: const InputDecoration(
-                hintText: 'Enter text...',
-              ),
+      backgroundColor: Colors.blueGrey,
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Image.asset(
+              '../lib/logo.png', // Replace 'assets/logo.png' with your logo asset path
+              height: 40, // Adjust the height as needed
             ),
-            // Check button
-            ElevatedButton(
-              onPressed: translateAndDetect,
-              child: const Text('Check'),
-            ),
-            // Output bar
-            Column(
-              children: [
-                Text('Translated Text: $translatedText'),
-                Text('Detection Result: $detectionResult'),
-                // Display graph here
-              ],
-            ),
+            const SizedBox(width: 30), // Add some spacing between logo and title
+            const Text('Hate Speech Detection'),
           ],
         ),
+        backgroundColor: Colors.deepPurple,
+        elevation: 0,
+        // actions:  [
+        //   // IconButton(
+        //   //   icon:  Icon(Icons.lightbulb_outline),
+        //   //   onPressed: () {
+        //   //     // Toggle between light and dark mode
+        //   //     Theme.of(context).brightness == Brightness.light
+        //   //         ? Theme.of(context).brightness = Brightness.dark
+        //   //         : Theme.of(context).brightness = Brightness.light;
+        //   //   },
+        //   // ),
+        // ],
       ),
-      bottomNavigationBar: const BottomNavBar(), // Use your custom bottom nav bar
+
+      body:  Stack(
+        fit: StackFit.expand,
+        children: [
+        Image.asset(
+        '../lib/body.png', // Replace 'assets/background_image.jpg' with your image asset path
+        fit: BoxFit.cover,
+      ),
+
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextField(
+                onChanged: (text) {
+                  inputText = text;
+                },
+                decoration: const InputDecoration(
+                  hintText: 'Enter a sentence...',
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: translateAndCheck,
+                child: const Text('Check Hate Speech'),
+              ),
+              const SizedBox(height: 20),
+              Text('Translated Text: $translatedText'),
+              Text('Is Hate Speech: $isHateSpeech'),
+              Text('Accuracy: ${accuracy.toStringAsFixed(2)}'),
+            ],
+          ),
+        ),
+      ],
+      ),
+
+      // bottomNavigationBar: CrystalNavigationBar(
+      //   currentIndex: _currentIndex,
+      //   onTap: _onNavItemTapped,
+      //   items: [
+      //     CrystalNavigationBarItem(icon: Icons.home, label: 'Home'),
+      //     CrystalNavigationBarItem(icon: Icons.info, label: 'About'),
+      //     CrystalNavigationBarItem(icon: Icons.contact_mail, label: 'Contact'),
+      //   ],
+      // ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.deepPurple,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'H O M E',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.support_agent_outlined),
+            label: 'C O N T A C T',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info),
+            label: 'A B O U T',
+          ),
+
+        ],
+      ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-// import 'dart:convert';
-// import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
-// import 'navbar.dart'; // Import your app bar
-// import 'bottomnavbar.dart'; // Import your bottom navigation bar
-//
-// void main() {
-//   runApp(MyApp());
-// }
-//
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Translate & Detect Hate Speech',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//       ),
-//       home: MyHomePage(),
-//     );
-//   }
-// }
-//
-// class MyHomePage extends StatefulWidget {
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-//
-// class _MyHomePageState extends State<MyHomePage> {
-//   String userInput = '';
-//   String translatedText = '';
-//   String detectionResult = '';
-//   // Add variables to store graph data
-//
-//   // Function to handle translation and hate speech detection
-//   Future<void> translateAndDetect() async {
-//     // Call Google Translate API to translate userInput to English
-//     final String apiKey = 'YOUR_GOOGLE_TRANSLATE_API_KEY';
-//     final String apiUrl =
-//         'https://translation.googleapis.com/language/translate/v2?key=$apiKey&source=en&target=en&q=$userInput';
-//
-//     final response = await http.post(Uri.parse(apiUrl));
-//     final decoded = json.decode(response.body);
-//
-//     setState(() {
-//       translatedText = decoded['data']['translations'][0]['translatedText'];
-//     });
-//
-//     // Pass translated text to the hate speech detection model
-//     // Model inference here
-//
-//     // Update detectionResult state variables
-//     setState(() {
-//       // Update detectionResult based on model results
-//     });
-//
-//     // Generate graph based on model results
-//     // Graph generation code here
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: NavBar(), // Use your custom app bar
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             // Input bar
-//             TextField(
-//               onChanged: (value) {
-//                 setState(() {
-//                   userInput = value;
-//                 });
-//               },
-//               decoration: InputDecoration(
-//                 hintText: 'Enter text...',
-//               ),
-//             ),
-//             // Check button
-//             ElevatedButton(
-//               onPressed: translateAndDetect,
-//               child: Text('Check'),
-//             ),
-//             // Output bar
-//             Column(
-//               children: [
-//                 Text('Translated Text: $translatedText'),
-//                 Text('Detection Result: $detectionResult'),
-//                 // Display graph here
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//       bottomNavigationBar: BottomNavBar(), // Use your custom bottom nav bar
-//     );
-//   }
-// }
